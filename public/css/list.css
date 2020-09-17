@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.right {
+  right: 0;
+  margin-right: 10px;
+  margin-top: -1rem;
+  width: 150px;
+}
+
+/* pagination */
+ul.pagination, ul.pagination .page-item, ul.pagination .page-link {
+  display: inline-flex;
+  margin-top: 10px;
+}
+/* list table view */
+.table {
+  background-color: #fff;
+}
