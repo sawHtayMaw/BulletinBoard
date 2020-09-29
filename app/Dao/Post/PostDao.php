@@ -86,6 +86,9 @@ class PostDao implements PostDaoInterface
      */
     public function deletePost($id)
     {
-        Post::where('id', $id)->delete();
+        $post = Post::find($id);
+        $post->deleted_user_id = Auth::user()->id;
+        $post->save();
+        $post->delete();
     }
 }
