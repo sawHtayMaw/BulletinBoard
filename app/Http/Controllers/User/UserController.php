@@ -35,7 +35,8 @@ class UserController extends Controller
     public function index()
     {
         $userList = $this->userInterface->getUserList();
-        return view('user.userlist')->with('userList', $userList);
+        $message = $this->userInterface->getAvailableMessage($userList);
+        return view('user.userlist')->with('userList', $userList)->with('message', $message);
     }
     /**
      * list of user by search keyword
@@ -48,11 +49,12 @@ class UserController extends Controller
         $createdFrom = $request->input('createdfrom');
         $createdTo = $request->input('createdto');
         $userList = $this->userInterface->getSearchUser($name, $email, $createdFrom, $createdTo);
+        $message = $this->userInterface->getAvailableMessage($userList);
         return view('user.userlist')->with('userList', $userList)
             ->with('name', $name)
             ->with('email', $email)
             ->with('createdFrom', $createdFrom)
-            ->with('createdTo', $createdTo);
+            ->with('createdTo', $createdTo)->with('message', $message);
     }
     /**
      * show user profile

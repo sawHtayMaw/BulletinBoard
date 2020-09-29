@@ -30,6 +30,19 @@ class UserService implements UserServiceInterface
         return $this->userDao->getUserList();
     }
     /**
+     * Get User available or not Message
+     *
+     * @param List<User> userList
+     * @return message
+     */
+    public function getAvailableMessage($userList)
+    {
+        $message = "";
+        if (count($userList) <= 0)
+            $message = 'No user available!';
+        return $message;
+    }
+    /**
      * user list by search keyword
      * @param string $name
      * @param string $email

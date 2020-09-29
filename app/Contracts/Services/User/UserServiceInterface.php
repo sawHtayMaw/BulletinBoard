@@ -22,6 +22,13 @@ interface UserServiceInterface
      */
     public function getSearchUser($name, $email, $createdFrom, $createdTo);
     /**
+     * Get User available or not Message
+     *
+     * @param List<User> $userList
+     * @return message
+     */
+    public function getAvailableMessage($userList);
+    /**
      * get user by id
      * @param int $id
      * @return user

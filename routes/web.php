@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/', 'Post\PostController@index');
 Auth::routes();
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::group(['prefix' => 'posts'], function () {
     Route::get('/', 'Post\PostController@index')->name('posts#index');

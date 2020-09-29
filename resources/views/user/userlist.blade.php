@@ -71,9 +71,16 @@
               </tbody>
             </table>
           </div>
-          @endif
-          @endif
+          @else
+          <div class="card border-danger mt-3">
+            <div class="card-header bg-danger text-white">{{ __('No user available') }}</div>
+              <div class="card-body text-secondary">
+                {{ $message }}
+              </div>
+            </div>
           </div>
+          @endif
+          @endif
       @if($userList instanceof \Illuminate\Pagination\LengthAwarePaginator)
         <center>{!! $userList->render() !!}</center>
       @endif
