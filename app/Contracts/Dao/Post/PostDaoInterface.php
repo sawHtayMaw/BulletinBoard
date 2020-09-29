@@ -25,10 +25,10 @@ interface PostDaoInterface
     public function getPostByTitle($title);
     /**
      * get post by search keyword
-     * @param int $q
+     * @param int $query
      * @return postList
      */
-    public function postSearch($q);
+    public function postSearch($query);
     /**
      * create post
      * @param Post $post
@@ -37,15 +37,15 @@ interface PostDaoInterface
     public function savePost($post);
     /**
      * edit post
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminat\Http\Responser
      */
     public function updatePost($request, $id);
     /**
      * delete post
-     * @param Post $post
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function deletePost($post);
+    public function deletePost($id);
 
 }

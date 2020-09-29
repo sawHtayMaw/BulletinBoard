@@ -2011,7 +2011,9 @@ module.exports = {
     }, duration);
     return this;
   }
-
+/**
+ * @param {Function} fn The function to call for each interceptor
+ */
   function setTransitionEndSupport() {
     $.fn.emulateTransitionEnd = transitionEndEmulator;
     $.event.special[Util.TRANSITION_END] = getSpecialTransitionEndEvent();

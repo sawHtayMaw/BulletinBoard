@@ -4,15 +4,20 @@ namespace App\Services\Post;
 
 use App\Contracts\Dao\Post\PostDaoInterface;
 use App\Contracts\Services\Post\PostServiceInterface;
+use App\Exports\PostExport;
 use App\Models\Post;
 use App\Util\StringUtil;
-use App\Exports\PostExport;
 use Maatwebsite\Excel\Facades\Excel;
-
 
 class PostService implements PostServiceInterface
 {
     private $postDao;
+
+    /**
+     * Class Constructor
+     * @param OperatorPostDaoInterface $postDao
+     * @return
+     */
     public function __construct(PostDaoInterface $postDao)
     {
         $this->postDao = $postDao;
@@ -45,12 +50,12 @@ class PostService implements PostServiceInterface
     }
     /**
      * get post by search keyword
-     * @param int $q
+     * @param int $query
      * @return postList
      */
-    public function getSearchPost($q)
+    public function getSearchPost($query)
     {
-        return $this->postDao->postSearch($q);
+        return $this->postDao->postSearch($query);
     }
     /**
      * Check Method Title of Post Duplicated or Not
@@ -62,13 +67,28 @@ class PostService implements PostServiceInterface
     {
         if (StringUtil::isNotEmpty($this->postDao->getPostByTitle($request->input('title')))) {
             return true;
+        } else {
+            false;
         }
-        else false;
     }
     /**
+     * Get Post available or not Message
+     *
+     * @param List<Post> postList
+     * @return message
+     */
+    public function getAvailableMessage($postList)
+    {
+        $message = "";
+        if (count($postList) <= 0)
+            $message = 'No post available!';
+        return $message;
+    }
+
+    /**
      * create post
-     * @param Post $post
-     * @return \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function savePost($request)
     {
@@ -76,7 +96,7 @@ class PostService implements PostServiceInterface
     }
     /**
      * edit post
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function updatePost($request, $id)
@@ -85,18 +105,18 @@ class PostService implements PostServiceInterface
     }
     /**
      * delete post
-     * @param Post $post
-     * @return \Illuminate\Http\$request
+     * @param int $id
+     * @return \Illuminate\Http\Request $request
      */
-    public function deletePost($post)
+    public function deletePost($id)
     {
-        return $this->postDao->deletePost($post);
+        return $this->postDao->deletePost($id);
     }
     /**
      * download posts
      */
     public function downloadPost()
     {
-        return Excel::download(new PostExport, 'posts.xlsx');
+        return Excel::download(new PostExport, 'posts.csv');
     }
 }

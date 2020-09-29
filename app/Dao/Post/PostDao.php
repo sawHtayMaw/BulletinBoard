@@ -4,6 +4,7 @@ namespace App\Dao\Post;
 
 use App\Contracts\Dao\Post\PostDaoInterface;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostDao implements PostDaoInterface
@@ -24,12 +25,12 @@ class PostDao implements PostDaoInterface
     }
     /**
      * get post by search keyword
-     * @param int $q
+     * @param int $query
      * @return postList
      */
-    public function postSearch($q)
+    public function postSearch($query)
     {
-        $postList = Post::where('title', 'LIKE', '%' . $q . '%')->orWhere('description', 'LIKE', '%' . $q . '%')->where('deleted_user_id', null)->get();
+        $postList = Post::where('title', 'LIKE', '%' . $query . '%')->orWhere('description', 'LIKE', '%' . $query . '%')->where('deleted_user_id', null)->get();
         return $postList;
     }
     /**
@@ -52,7 +53,7 @@ class PostDao implements PostDaoInterface
     }
     /**
      * create post
-     * @param Post $post
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function savePost($request)
@@ -66,7 +67,7 @@ class PostDao implements PostDaoInterface
     }
     /**
      * edit post
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function updatePost($request, $id)
@@ -75,17 +76,16 @@ class PostDao implements PostDaoInterface
         $post->title = $request->title;
         $post->description = $request->description;
         $post->status = ($request->has('status')) ? "1" : "0";
-        $post->create_user_id = Auth::user()->id;
         $post->updated_user_id = Auth::user()->id;
         $post->save();
     }
     /**
      * delete post
-     * @param Post $post
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function deletePost($post)
+    public function deletePost($id)
     {
-        $post = Post::where('id', $post)->delete();
+        Post::where('id', $id)->delete();
     }
 }

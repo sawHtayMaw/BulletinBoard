@@ -12,13 +12,13 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'user',
-            'email' => 'user@gmail.com',
+            'name' => 'Aye Aye',
+            'email' => 'ayeaye@gmail.com',
             'password' => bcrypt('12345678'),
             'type' => 1,
             'profile' => null,
             'phone' => '09783276825',
-            'address' => 'Yangon',
+            'address' => 'Mandalay',
             'dob' => '1996-08-15',
             'create_user_id' => 1,
             'update_user_id' => 1

@@ -3,7 +3,6 @@
 namespace App\Contracts\Services\Post;
 
 use App\Models\Post;
-use GuzzleHttp\Psr7\Request;
 
 interface PostServiceInterface
 {
@@ -12,6 +11,13 @@ interface PostServiceInterface
      * @return postList
      */
     public function getPostList();
+    /**
+     * Get Post available or not Message
+     *
+     * @param List<Post> $postList
+     * @return message
+     */
+    public function getAvailableMessage($postList);
     /**
      * get a specific post
      * @param int $id
@@ -26,10 +32,10 @@ interface PostServiceInterface
     public function getPostByTitle($title);
     /**
      * get post by search keyword
-     * @param int $q
+     * @param int $query
      * @return postList
      */
-    public function getSearchPost($q);
+    public function getSearchPost($query);
     /**
      * Check Method Title of Post Duplicated or Not
      *
@@ -40,21 +46,21 @@ interface PostServiceInterface
     /**
      * create post
      * @param Post $post
-     * @return \Illuminate\Http\$request
+     * @return \Illuminate\Http\Request $request
      */
     public function savePost($request);
     /**
      * edit post
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminat\Http\Responser
      */
     public function updatePost($request, $id);
     /**
      * delete post
-     * @param Post $post
-     * @return \Illuminate\Http\$request
+     * @param int $id
+     * @return \Illuminate\Http\Request $request
      */
-    public function deletePost($post);
+    public function deletePost($id);
     /**
      * download posts
      */

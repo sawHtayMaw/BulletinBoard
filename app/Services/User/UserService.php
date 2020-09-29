@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 class UserService implements UserServiceInterface
 {
     private $userDao;
+
+    /**
+     * Class Constructor
+     * @param OperatorUserDaoInterface $userDao
+     * @return
+     */
     public function __construct(UserDaoInterface $userDao)
     {
         $this->userDao = $userDao;
@@ -54,7 +60,7 @@ class UserService implements UserServiceInterface
     }
     /**
      * save user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function saveUser($request)
@@ -71,14 +77,15 @@ class UserService implements UserServiceInterface
     {
         if (StringUtil::isNotEmpty($this->userDao->getUserByEmail($request->input('email')))) {
             return true;
+        } else {
+            false;
         }
-        else false;
 
     }
     /**
      * update user
      * @param int $id
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @param \Illuminate\Http\Response
      */
     public function updateUser(Request $request, $id)
@@ -87,12 +94,12 @@ class UserService implements UserServiceInterface
     }
     /**
      * delete user
-     * @param user $user
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function deleteUser($user)
+    public function deleteUser($id)
     {
-        return $this->userDao->deleteUser($user);
+        return $this->userDao->deleteUser($id);
     }
 
 }

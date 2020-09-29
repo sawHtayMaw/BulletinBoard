@@ -13,7 +13,7 @@ interface AuthServiceInterface
     /**
      * update password
      * @param User $user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function changePassword($user, $request);

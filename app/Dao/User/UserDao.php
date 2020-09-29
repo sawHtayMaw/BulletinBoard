@@ -3,8 +3,9 @@ namespace App\Dao\User;
 
 use App\Contracts\Dao\User\UserDaoInterface;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserDao implements UserDaoInterface
 {
@@ -61,27 +62,26 @@ class UserDao implements UserDaoInterface
     }
     /**
      * save user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function saveUser($request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->type = $request->type;
-        $user->dob = $request->dob;
-        $user->phone = $request->phone;
-        $user->address = $request->address;
-        $profile = explode("/", $request->profile);
-        $user->profile = $profile[1];
-        $user->save();
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'type' => $request->type,
+            'dob' => $request->dob,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'profile' => $request->profile,
+        ]);
     }
     /**
      * update User
      * @param int $id
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function updateUser(Request $request, $id)
@@ -97,8 +97,8 @@ class UserDao implements UserDaoInterface
         $user->dob = $request->dob;
         $user->phone = $request->phone;
         $user->address = $request->address;
-        $profile = explode("/", $request->profile);
-        $user->profile = $profile[1];
+        $user->profile = $request->profile;
+        $user->update_user_id = Auth::user()->id;
         $user->save();
     }
     /**
@@ -106,8 +106,8 @@ class UserDao implements UserDaoInterface
      * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function deleteUser($user)
+    public function deleteUser($id)
     {
-        $user = User::where('id', $user->id)->delete();
+        User::where('id', $id)->delete();
     }
 }

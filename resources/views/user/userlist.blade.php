@@ -21,9 +21,9 @@
           <div class="col-lg-2 col-md-4 col-9 mb-2">
             <input type="date" class="form-control" name="createdto" placeholder="Created To" value=@if(isset($createdTo)) {{ $createdTo }} @endif>
           </div>
-          <div class="col-lg-2 col-md-3 col-4 mb-2"><input type="submit" class="btn btn-primary display-block w-100 pd-2" value="Search"></div>
+          <div class="col-lg-2 col-md-4 col-4 mb-2"><input type="submit" class="btn btn-primary display-block w-100 pd-2" value="Search"></div>
           @auth
-            <div class="col-lg-2 col-md-3 col-2 mb-2"><a href="{{ route('users#create') }}" class="btn btn-primary w-100 pd-2">Add</a></div>
+            <div class="col-lg-2 col-md-4 col-2 mb-2"><a href="{{ route('users#create') }}" class="btn btn-primary w-100 pd-2">Add</a></div>
           @endauth
         </div>
       </form>
@@ -46,7 +46,7 @@
                   @endauth
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="text-center">
                 @foreach($userList as $user)
                 <tr>
                 <td>{{$user-> name}}</td>

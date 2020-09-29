@@ -15,6 +15,7 @@
               @endif
               <form action="{{ route('posts#upload') }}" enctype="multipart/form-data" method="POST">
                 @csrf
+
                 <label for="csvfile" class="form-label">Import File From : </label>
                 <div class="col-md-12 mt-3 mb-2">
                     <input id="csvfile" type="file" accept=".csv" class="col-md-8 @error('csvfile') is-invalid @enderror" name="csvfile"  autocomplete="csv" autofocus>

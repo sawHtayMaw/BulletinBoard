@@ -7,6 +7,7 @@
       <div class="card border-primary">
         <div class="card-header bg-primary text-white">{{ __('User Profile') }}</div>
         <div class="card-body">
+        <img src="{{ url('/storage/uploads/' . $user->profile) }}" class="position-absolute profile d-inline img-thumbnail right">
           <div class="row">
             <a href="{{ route('users#edit', $user->id) }}" class="col-md-4 col-form-label text-md-right">Edit</a>
           </div>

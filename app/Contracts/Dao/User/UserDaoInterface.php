@@ -36,21 +36,21 @@ interface UserDaoInterface
     public function getUserByEmail($email);
     /**
      * save user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function saveUser($request);
     /**
      * update user
      * @param int $id
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function updateUser(Request $request, $id);
     /**
      * delete user
-     * @param int $user
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function deleteUser($user);
+    public function deleteUser($id);
 }

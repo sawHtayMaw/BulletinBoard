@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Contracts\Services\User;
-use Illuminate\Http\Request;
+
 use App\Models\User;
+use Illuminate\Http\Request;
 
 interface UserServiceInterface
 {
@@ -34,10 +35,10 @@ interface UserServiceInterface
     public function getUserByEmail($email);
     /**
      * save user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @param \Illuminate\Http\Response
      */
-    public function saveUser($request);
+    public function saveUser(Request $request);
     /**
      * Check Method Email of User Duplicated or Not
      *
@@ -57,6 +58,5 @@ interface UserServiceInterface
      * @param user $user
      * @return \Illuminate\Http\Response
      */
-    public function deleteUser($user);
-
+    public function deleteUser($id);
 }

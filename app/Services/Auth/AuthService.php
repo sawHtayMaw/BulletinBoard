@@ -12,7 +12,6 @@ class AuthService implements AuthServiceInterface
 
     /**
      * Class Constructor
-     *
      * @param OperatorAuthDaoInterface $authDao
      * @return
      */
@@ -22,7 +21,6 @@ class AuthService implements AuthServiceInterface
     }
     /**
      * Get User
-     *
      * @param string $email
      * @return User
      */
@@ -33,11 +31,11 @@ class AuthService implements AuthServiceInterface
     /**
      * update password
      * @param User $user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function changePassword( $user, $request)
+    public function changePassword($user, $request)
     {
-        return $this->authDao->changePassword( $user, $request);
+        return $this->authDao->changePassword($user, $request);
     }
 }

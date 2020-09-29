@@ -9,9 +9,9 @@ use App\Models\User;
 use App\Util\StringUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -54,6 +54,9 @@ class UserController extends Controller
             ->with('createdFrom', $createdFrom)
             ->with('createdTo', $createdTo);
     }
+    /**
+     * show user profile
+     */
     public function profile()
     {
         $user = Auth::user();
@@ -68,46 +71,34 @@ class UserController extends Controller
      * create user
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createUser()
     {
         return view('user.createuser');
     }
     /**
      * confirm create
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function confirmCreate(Request $request)
+    public function confirmCreate(UserRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string'],
-            'email' => ['required', 'string'],
-            'password' => ['required', 'string'],
-            'confirm_password' => ['required'],
-            'type' => ['required'],
-            'dob' => ['required', 'date'],
-            'phone' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'profile' => ['required'],
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator);
-        }
         $user['name'] = $request->name;
         $user['email'] = $request->email;
         $user['password'] = $request->password;
-        $user['confirm_password'] = $request->confirm_password;
         $user['type'] = $request->type;
         $user['dob'] = $request->dob;
         $user['phone'] = $request->phone;
         $user['address'] = $request->address;
-        $request->profile = $request->profile->store('uploads', 'public');
-        $user['profile'] = $request->profile;
+        $destination_path = 'public/uploads';
+        $image = $request->file('profile');
+        $image_name = $image->getClientOriginalName();
+        $path = $request->file('profile')->storeAs($destination_path, $image_name);
+        $user['profile'] = $image_name;
         return view('user.confirmcreate')->with('user', $user);
     }
     /**
      * save user
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function save(Request $request)
@@ -121,22 +112,11 @@ class UserController extends Controller
         }
     }
     /**
-     * delete user
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($id)
-    {
-        $user = $this->userInterface->getUserById($id);
-        $this->userInterface->deleteUser($user);
-        return redirect()->route('users#index');
-    }
-    /**
      * edit user
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function updateUser($id)
     {
         $user = $this->userInterface->getUserById($id);
         if ($user->type == 0) {
@@ -144,28 +124,17 @@ class UserController extends Controller
         } else {
             $user->type = "User";
         }
-        return view('user.edituser')->with('duplicate', false)->with('user', $user);
+        return view('user.edituser')->with('user', $user);
 
     }
     /**
      * confirm edit
      * @param int $id
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function confirmEdit(Request $request, $id)
+    public function confirmUpdate(UserRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string'],
-            'email' => ['required', 'string'],
-            'type' => ['required'],
-            'dob' => ['required', 'date'],
-            'phone' => ['required', 'string'],
-            'address' => ['required', 'string'],
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator);
-        }
         $user = User::find($id);
         $user['name'] = $request->name;
         $user['email'] = $request->email;
@@ -175,19 +144,22 @@ class UserController extends Controller
         $user['address'] = $request->address;
         if ($request->hasFile('profile')) {
             $oldProfile = $user->profile;
-            $exists = file_exists(public_path() . '/storage/uploads/' . $oldProfile);
-            if ($exists) {
-                Storage::delete('/storage/uploads/' . $oldProfile);
+            $oldImage = file_exists(public_path() . '/storage/uploads/' . $oldProfile);
+            if ($oldImage) {
+                Storage::delete('/public/uploads/' . $oldProfile);
             }
-            $request->profile = $request->profile->store('uploads', 'public');
-            $user['profile'] = $request->profile;
-            return view('user.confirmedit')->with('user', $user);
+        $destination_path = 'public/uploads';
+        $image = $request->file('profile');
+        $image_name = $image->getClientOriginalName();
+        $path = $request->file('profile')->storeAs($destination_path, $image_name);
+        $user['profile'] = $image_name;
+        return view('user.confirmedit')->with('user', $user);
         }
     }
     /**
      * updated user
      * @param int $id
-     * @param \Illuminate\Http\$request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function updated(Request $request, $id)
@@ -200,11 +172,20 @@ class UserController extends Controller
         } else {
             $user = $this->userInterface->updateUser($request, $id);
             if (Gate::allows('isUser')) {
-                return redirect('/');
-            }
-            else {
-                return redirect() -> route('users#index');
+                return redirect()->route('users#profile');
+            } else {
+                return redirect()->route('users#index');
             }
         }
+    }
+    /**
+     * delete user
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteUser($id)
+    {
+        $this->userInterface->deleteUser($id);
+        return redirect()->route('users#index');
     }
 }

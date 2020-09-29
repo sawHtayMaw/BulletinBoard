@@ -8,6 +8,7 @@
     <div class="col-md-9">
       <form action="{{ route('posts#search') }}" method="POST" role="search">
         {{ csrf_field() }}
+
         <div class="row">
           <div class="col-lg-4 col-md-8 col-8 mb-2">
           <input type="text" class="form-control" name="q" value="@if(isset($q)) {{ $q }} @endif">
@@ -41,7 +42,7 @@
                 <td>{{$post -> title }}</td>
                 <td>{{$post -> description}}</td>
                 <td>{{$post -> user -> name}}</td>
-                <td>{{$post-> created_at->format('Y/m/d')}}</td>
+                <td>{{$post-> created_at}}</td>
                 @auth
                 <td><a href="{{ route('posts#update', $post->id)}}">Edit</a></td>
                 <td>
@@ -50,19 +51,27 @@
                             @method('DELETE')
                             <button class="btn btn-danger" onclick="return confirm('Are you sure?')" type="submit">Delete</button>
                         </form>
-                    </td>
+                </td>
                 @endauth
                 </tr>
                 @endforeach
               </tbody>
             </table>
           </div>
-          @if($postList instanceof \Illuminate\Pagination\LengthAwarePaginator)
-        <center>{!! $postList->render() !!}</center>
-      @endif
+          @else
+          <div class="card border-danger mt-3">
+            <div class="card-header bg-danger text-white">{{ __('No post available') }}</div>
+              <div class="card-body text-secondary">
+                {{ $message }}
+              </div>
+            </div>
           </div>
         @endif
       @endif
+          @if($postList instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        <center>{!! $postList->render() !!}</center>
+      @endif
+
     </div>
   </div>
 </div>

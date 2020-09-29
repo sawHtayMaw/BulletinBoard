@@ -8,7 +8,7 @@
         <div class="card-header bg-primary text-white">{{ __('Edit User') }}</div>
         <div class="card-body">
         <img src="{{ url('/storage/uploads/' . $user->profile) }}" class="position-absolute profile d-inline img-thumbnail right">
-          <form method="POST" action="{{ route('users#confirmEdit', $user->id) }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('users#confirmUpdate', $user->id) }}" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group row">
