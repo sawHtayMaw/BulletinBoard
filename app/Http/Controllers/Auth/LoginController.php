@@ -19,7 +19,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -39,9 +39,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
         return redirect('/login');
-      }
+    }
 
 }

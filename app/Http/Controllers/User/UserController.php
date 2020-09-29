@@ -5,13 +5,13 @@ namespace App\Http\Controllers\User;
 use App\Contracts\Services\Auth\AuthServiceInterface;
 use App\Contracts\Services\User\UserServiceInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Util\StringUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -150,12 +150,12 @@ class UserController extends Controller
             if ($oldImage) {
                 Storage::delete('/public/uploads/' . $oldProfile);
             }
-        $destination_path = 'public/uploads';
-        $image = $request->file('profile');
-        $image_name = $image->getClientOriginalName();
-        $path = $request->file('profile')->storeAs($destination_path, $image_name);
-        $user['profile'] = $image_name;
-        return view('user.confirmedit')->with('user', $user);
+            $destination_path = 'public/uploads';
+            $image = $request->file('profile');
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('profile')->storeAs($destination_path, $image_name);
+            $user['profile'] = $image_name;
+            return view('user.confirmedit')->with('user', $user);
         }
     }
     /**

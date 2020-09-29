@@ -17,9 +17,11 @@ class PostDao implements PostDaoInterface
     public function getPostList()
     {
         if (Auth::check()) {
-            $post = (Auth::user()->isAdmin())? Post::query(): Post::where('create_user_id', Auth::user()->id);
+            $post = (Auth::user()->isAdmin()) ? Post::query() : Post::where('create_user_id', Auth::user()->id);
+        } else {
+            $post = Post::where('status', '1');
         }
-        else $post = Post::where('status', '1');
+
         $postList = $post->where('deleted_user_id', null)->paginate(5);
         return $postList;
     }
