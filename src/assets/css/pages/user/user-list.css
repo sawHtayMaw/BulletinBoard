@@ -1,0 +1,18 @@
+
+.btn-info {
+  color: white;
+}
+.list {
+  width: 75%;
+  margin: 0 auto;
+}
+.form-group {
+  width: 700px;
+}
+.preview {
+  float: right;
+  width: 170px;
+}
+.invalid-feedback {
+  color: red;
+}

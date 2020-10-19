@@ -1,0 +1,30 @@
+.container {
+  max-width: 1140px;
+}
+.btn-info {
+  color: white;
+}
+.table {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+.row {
+    width: 90%;
+    margin: 0 auto;
+}
+.list {
+  width: 80%;
+  margin: 0 auto;
+}
+.uploadContainer {
+  width: 60%;
+  margin: 0 auto;
+}
+.uploadFile {
+  width: 500px;
+  border: 1px solid black;
+}
+.invalid-feedback {
+  color: red;
+}
