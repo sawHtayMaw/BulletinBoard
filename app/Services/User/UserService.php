@@ -101,9 +101,9 @@ class UserService implements UserServiceInterface
      * @param \Illuminate\Http\Request $request
      * @param \Illuminate\Http\Response
      */
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
-        return $this->userDao->updateUser($request, $id);
+        return $this->userDao->updateUser($request);
     }
     /**
      * delete user

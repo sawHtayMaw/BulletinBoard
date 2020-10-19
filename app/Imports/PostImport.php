@@ -14,6 +14,7 @@ class PostImport implements ToCollection
      */
     public function collection(Collection $rows)
     {
+        return response()->json($rows);
         foreach ($rows as $row) {
             Post::create([
                 'title' => $row[0],

@@ -3,10 +3,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Passport\HasApiTokens;
+
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
+    use SoftDeletes, HasApiTokens;
 
     /**
      * The table associated with the User model

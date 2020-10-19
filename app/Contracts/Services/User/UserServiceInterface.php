@@ -59,7 +59,7 @@ interface UserServiceInterface
      * @param \Illuminate\Http\$request
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request, $id);
+    public function updateUser(Request $request);
     /**
      * delete user
      * @param user $user

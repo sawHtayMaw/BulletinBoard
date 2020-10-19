@@ -40,7 +40,7 @@ interface PostDaoInterface
      * @param \Illuminate\Http\Request $request
      * @return \Illuminat\Http\Responser
      */
-    public function updatePost($request, $id);
+    public function updatePost($request);
     /**
      * delete post
      * @param int $id

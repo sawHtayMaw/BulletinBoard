@@ -46,7 +46,7 @@ interface UserDaoInterface
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request, $id);
+    public function updateUser(Request $request);
     /**
      * delete user
      * @param int $id

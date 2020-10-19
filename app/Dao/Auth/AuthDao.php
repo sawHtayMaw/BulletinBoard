@@ -32,7 +32,6 @@ class AuthDao implements AuthDaoInterface
      */
     public function changePassword( $user, $request)
     {
-
         $user->password = Hash::make($request->password);
         $user->update();
     }

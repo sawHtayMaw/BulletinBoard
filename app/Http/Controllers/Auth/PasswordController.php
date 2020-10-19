@@ -7,6 +7,7 @@ use App\Contracts\Services\User\UserServiceInterface;
 use App\Contracts\Services\Auth\AuthServiceInterface;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PasswordController extends Controller
 {
@@ -45,15 +46,10 @@ class PasswordController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $request->validate([
-            'oldpassword' => ['required', new MatchOldPassword],
-            'password' => ['required'],
-            'password_confirmation' => ['same:password'],
-        ]);
-        $user= $this->userInterface->getUserById($id);
-        $this->authInterface->changePassword($user, $request);
-        return redirect()->route('users#profile', $id);
+        $user= $this->userInterface->getUserById($request->id);
+        $user->password = Hash::make($request->newPassword);
+        $user->update();
     }
 }

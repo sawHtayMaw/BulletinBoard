@@ -53,3 +53,6 @@ Route::group(['profix' => 'password'], function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{any}', function () {
+    return view('index');
+})->where('any', '.*');

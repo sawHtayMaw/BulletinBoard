@@ -16,7 +16,7 @@ class UserDao implements UserDaoInterface
      */
     public function getUserList()
     {
-        $userList = User::where('delete_user_id', null)->paginate(5);
+        $userList = User::get();
         return $userList;
     }
     /**
@@ -84,9 +84,10 @@ class UserDao implements UserDaoInterface
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
+        return response()->json($user);
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->type == "Admin") {

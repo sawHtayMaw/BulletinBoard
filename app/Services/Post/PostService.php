@@ -99,9 +99,9 @@ class PostService implements PostServiceInterface
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function updatePost($request, $id)
+    public function updatePost($request)
     {
-        $this->postDao->updatePost($request, $id);
+        $this->postDao->updatePost($request);
     }
     /**
      * delete post
